@@ -17,7 +17,7 @@ function generarMatrizOld(largo: number): string[][] {
 
   for (let fila = 0; fila < largo; fila++) {
     figura[fila] = [];
-    for (let columna = 1; columna <= largo; columna++) {
+    for (let columna = 0; columna < largo; columna++) {
       figura[fila][columna] = '';
     }
   }
@@ -25,14 +25,82 @@ function generarMatrizOld(largo: number): string[][] {
   return figura;
 }
 
-function generarMatriz(largo: number): string[][] {
-  return Array.from({ length: largo }, () => Array(largo).fill(' '));
+/**
+ * Genera una matriz cuadrada de cadenas vacías.
+ *
+ * @param largo - La longitud de cada lado de la matriz cuadrada.
+ * @returns Una matriz cuadrada de cadenas vacías de tamaño `n` x `n`.
+ *
+ * @example
+ * ```typescript
+ * const matriz = generarMatriz(3);
+ * // matriz = [
+ * //   ['', '', ''],
+ * //   ['', '', ''],
+ * //   ['', '', '']
+ * // ]
+ * ```
+ *
+ * @throws {RangeError} Si el valor de `largo` es negativo.
+ */
+export function generarMatriz(largo: number): string[][] {
+  if (largo < 0) {
+    throw new RangeError('El valor de largo no puede ser negativo.');
+  }
+  return Array.from({ length: largo }, () => Array(largo).fill(''));
 }
 
-function imprimirMatriz(matriz: string[][]): string {
+/**
+ * Convierte una matriz de cadenas en una representación de cadena con filas separadas por nuevas líneas.
+ *
+ * @param matriz - La matriz de cadenas a convertir.
+ * @returns Una cadena donde cada fila de la matriz está separada por espacios y cada fila está en una nueva línea.
+ *
+ * @example
+ * ```typescript
+ * const matriz = [
+ *   ['a', 'b', 'c'],
+ *   ['d', 'e', 'f'],
+ *   ['g', 'h', 'i']
+ * ];
+ * const resultado = imprimirMatriz(matriz);
+ * // resultado = 'a b c\nd e f\ng h i'
+ * ```
+ */
+export function imprimirMatriz(matriz: string[][]): string {
   return matriz.map((row) => row.join(' ')).join('\n');
 }
 
+/**
+ * Dibuja un cuadrado en una matriz de cadenas, utilizando caracteres específicos para los bordes y el relleno.
+ *
+ * @param figura - La matriz de cadenas en la que se dibujará el cuadrado.
+ * @param inicio - La fila y columna inicial donde comienza el cuadrado.
+ * @param final - La fila y columna final donde termina el cuadrado.
+ * @param bordes - (Opcional) El carácter para los bordes del cuadrado. Por defecto es '*'.
+ * @param relleno - (Opcional) El carácter para el relleno del cuadrado. Por defecto es ' ' (espacio).
+ * @returns La representación de cadena de la matriz con el cuadrado dibujado.
+ *
+ * @example
+ * ```typescript
+ * const matriz = [
+ *   [' ', ' ', ' ', ' ', ' '],
+ *   [' ', ' ', ' ', ' ', ' '],
+ *   [' ', ' ', ' ', ' ', ' '],
+ *   [' ', ' ', ' ', ' ', ' '],
+ *   [' ', ' ', ' ', ' ', ' ']
+ * ];
+ * const resultado = generarCuadrado(matriz, 1, 3, '#', '.');
+ * // resultado =
+ * // '     \n' +
+ * // ' ### \n' +
+ * // ' #.# \n' +
+ * // ' ### \n' +
+ * // '     '
+ * ```
+ *
+ * @throws {RangeError} Si `inicio` o `final` están fuera de los límites de la matriz.
+ */
 function generarCuadrado(
   figura: string[][],
   inicio: number,
@@ -81,6 +149,27 @@ function generarCuadradoAI(
   return imprimirMatriz(figura);
 }
 
+/**
+ * Genera una matriz cuadrada con múltiples cuadrados concéntricos dibujados en ella.
+ *
+ * @param largo - (Opcional) La longitud de cada lado de la matriz cuadrada. Por defecto es 4.
+ * @param bordes - (Opcional) El carácter para los bordes de los cuadrados. Por defecto es '*'.
+ * @param relleno - (Opcional) El carácter para el relleno de los cuadrados. Por defecto es ' ' (espacio).
+ * @returns Una cadena que representa la matriz con los cuadrados concéntricos dibujados.
+ *
+ * @example
+ * ```typescript
+ * const resultado = generarCuadrados(5, '#', '.');
+ * // resultado =
+ * // '#####\n' +
+ * // '#...#\n' +
+ * // '#.#.#\n' +
+ * // '#...#\n' +
+ * // '#####'
+ * ```
+ *
+ * @throws {RangeError} Si el valor de `largo` es negativo.
+ */
 function generarCuadrados(
   largo: number = 4,
   bordes: string = '*',
@@ -104,4 +193,5 @@ export const result = {
   test6: generarCuadrados(10, '*', ' '),
   test7: generarCuadrados(25, '▓▓', '░░'),
   test8: generarCuadrados(50, '▓▓', '░░'),
+  test9: generarCuadrados(45, '▓▓', '░░'),
 };
